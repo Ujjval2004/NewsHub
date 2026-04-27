@@ -50,12 +50,8 @@ Unlike basic keyword matching, NewsHub uses:
 
 ## 📸 Screenshots
 
-<!-- Add screenshots here -->
-<!-- Example:
-![Home](./screenshots/home.png)
--->
+<img width="1920" height="849" alt="image" src="https://github.com/user-attachments/assets/27241f07-a3d4-407a-926a-49f76ca3ed9e" />
 
----
 
 ## ⚙️ Installation & Setup
 
