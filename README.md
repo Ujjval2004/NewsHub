@@ -7,8 +7,7 @@ A full-stack news aggregation platform that scrapes headlines from multiple news
 - Trending news detection
 - Search headlines
 - Refresh news manually
-- Category-based filtering
-- Notes section for users
+- Notes section for users with download feature
 
 ## 🛠 Tech Stack
 - Frontend: React
