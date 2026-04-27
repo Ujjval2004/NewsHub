@@ -241,3 +241,17 @@
 .category-block li:hover {
   text-decoration: underline;
 }
+
+.download-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #444;
+}

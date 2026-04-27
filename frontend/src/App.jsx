@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import NewsCard from "./components/NewsCard";
+import jsPDF from "jspdf";
 
 const SOURCE_WEBSITES = {
   "Economic Times": "https://economictimes.indiatimes.com",
@@ -19,7 +20,7 @@ function App() {
   const [selectedPaper, setSelectedPaper] = useState(null);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
 
-  // 🔥 FETCH FUNCTION (REUSABLE)
+  // 🔥 FETCH FUNCTION
   const fetchNews = () => {
     fetch("http://localhost:5000/api/news")
       .then((res) => res.json())
@@ -38,6 +39,23 @@ function App() {
   useEffect(() => {
     fetchNews();
   }, []);
+
+  // 🔥 DOWNLOAD NOTES FUNCTION
+  const downloadNotes = () => {
+    if (!notes.trim()) {
+      alert("Notes are empty!");
+      return;
+    }
+
+    const pdf = new jsPDF();
+
+    pdf.text("My Notes", 10, 10);
+
+    const splitText = pdf.splitTextToSize(notes, 180);
+    pdf.text(splitText, 10, 20);
+
+    pdf.save(`notes_${new Date().toISOString()}.pdf`);
+  };
 
   // 🔥 GROUP BY CATEGORY
   const groupByCategory = (articles) => {
@@ -142,10 +160,17 @@ function App() {
       <div className="bottom-section">
         <div className="notes-section">
           <h2>Take Notes</h2>
+
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
+            placeholder="Write your notes here..."
           />
+
+          {/* 🔥 THIS WAS MISSING */}
+          <button className="download-btn" onClick={downloadNotes}>
+            Download Notes
+          </button>
         </div>
 
         <div className="trending-section">

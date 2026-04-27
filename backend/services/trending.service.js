@@ -43,15 +43,15 @@ export const detectTrendingNews = async (groupedNews) => {
   });
 
   // 🔹 Generate embeddings
-  const embeddings = [];
-
-  for (let h of allHeadlines) {
+ const embeddings = await Promise.all(
+  allHeadlines.map(async (h) => {
     const output = await extractor(h, {
       pooling: "mean",
       normalize: true
     });
-    embeddings.push(output.data);
-  }
+    return output.data;
+  })
+);
 
   const clusters = [];
 
@@ -63,7 +63,7 @@ export const detectTrendingNews = async (groupedNews) => {
       const sim = cosineSim(embeddings[i], cluster.embedding);
 
       // 🔥 LOWERED THRESHOLD (IMPORTANT)
-      if (sim > 0.5) {
+      if (sim > 0.7) {
         cluster.items.push(meta[i]);
         added = true;
         break;
@@ -84,10 +84,10 @@ export const detectTrendingNews = async (groupedNews) => {
       const sources = new Set(c.items.map((i) => i.paper));
 
       // ✅ RELAXED CONDITION
-      return c.items.length >= 2 ;
+      return new Set(c.items.map(i => i.paper)).size >= 2;
     })
     .map((c) => ({
-      title: c.items[0].article.title,
+      title: c.items.sort((a, b) => a.article.title.length - b.article.title.length)[0].article.title,
       count: c.items.length,
       sources: [...new Set(c.items.map((i) => i.paper))]
     }))

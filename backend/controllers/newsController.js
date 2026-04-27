@@ -5,7 +5,6 @@ export const getNews = async (req, res) => {
     const data = await scrapeNews();
     res.json(data);
   } catch (error) {
-    console.error("Error fetching news:", error.message);
     res.status(500).json({ error: "Failed to fetch news" });
   }
 };
