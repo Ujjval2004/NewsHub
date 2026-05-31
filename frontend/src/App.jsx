@@ -40,7 +40,7 @@ function App() {
     fetchNews();
   }, []);
 
-  // 🔥 DOWNLOAD NOTES FUNCTION
+  //  DOWNLOAD NOTES FUNCTION
   const downloadNotes = () => {
     if (!notes.trim()) {
       alert("Notes are empty!");
@@ -156,7 +156,7 @@ function App() {
         </div>
       )}
 
-      {/* 📝 NOTES + TRENDING */}
+    
       <div className="bottom-section">
         <div className="notes-section">
           <h2>Take Notes</h2>

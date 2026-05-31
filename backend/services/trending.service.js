@@ -34,7 +34,7 @@ export const detectTrendingNews = async (groupedNews) => {
   const allHeadlines = [];
   const meta = [];
 
-  // 🔹 Flatten headlines
+  //  Flatten headlines
   Object.keys(groupedNews).forEach((paper) => {
     groupedNews[paper].forEach((article) => {
       allHeadlines.push(article.title);
@@ -42,7 +42,7 @@ export const detectTrendingNews = async (groupedNews) => {
     });
   });
 
-  // 🔹 Generate embeddings
+  //  Generate embeddings
  const embeddings = await Promise.all(
   allHeadlines.map(async (h) => {
     const output = await extractor(h, {
@@ -55,14 +55,14 @@ export const detectTrendingNews = async (groupedNews) => {
 
   const clusters = [];
 
-  // 🔥 CLUSTER SIMILAR HEADLINES
+  //  CLUSTER SIMILAR HEADLINES
   for (let i = 0; i < embeddings.length; i++) {
     let added = false;
 
     for (let cluster of clusters) {
       const sim = cosineSim(embeddings[i], cluster.embedding);
 
-      // 🔥 LOWERED THRESHOLD (IMPORTANT)
+      //  LOWERED THRESHOLD (IMPORTANT)
       if (sim > 0.7) {
         cluster.items.push(meta[i]);
         added = true;
@@ -78,12 +78,12 @@ export const detectTrendingNews = async (groupedNews) => {
     }
   }
 
-  // 🔥 FILTER TRENDING
+  //  FILTER TRENDING
   const trending = clusters
     .filter((c) => {
       const sources = new Set(c.items.map((i) => i.paper));
 
-      // ✅ RELAXED CONDITION
+      //   CONDITION
       return new Set(c.items.map(i => i.paper)).size >= 2;
     })
     .map((c) => ({

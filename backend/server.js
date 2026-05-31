@@ -43,13 +43,13 @@ app.post("/api/summary", async (req, res) => {
   }
 });
 
-// ✅ Connect DB
+//  Connect Database
 connectDB();
 
-// ✅ START CRON (if you added auto update feature)
+//  START CRON (if you added auto update feature)
 startCron();
 
-// ✅ START SERVER (MOST IMPORTANT FIX)
+//  START SERVER (MOST IMPORTANT FIX)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
